@@ -1,10 +1,13 @@
 #include "pch.h"
 #include "D3DTest.h"
 
-
+#include "imgui.h"
+#include "examples/imgui_impl_dx12.h"
 D3DTest::D3DTest(uint32 width, uint32 height, const std::wstring& name)
     : D3DApplication(width, height, name),
     m_FrameIndex(0),
+    m_Viewport(0.0f, 0.0f, static_cast<float>(width), static_cast<float>(height)),
+    m_ScissorRect(0, 0, static_cast<LONG>(width), static_cast<LONG>(height)),
     m_RtvDescriptorSize(0)
 {
 }
@@ -142,6 +145,15 @@ bool D3DTest::InitDirect3D()
     }
 
     {
+        D3D12_DESCRIPTOR_HEAP_DESC desc = {};
+        desc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
+        desc.NumDescriptors = 1;
+        desc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
+        if (m_Device->CreateDescriptorHeap(&desc, IID_PPV_ARGS(&m_SrvHeap)) != S_OK)
+            return false;
+    }
+
+    {
         CD3DX12_CPU_DESCRIPTOR_HANDLE rtvHandle(m_RtvHeap->GetCPUDescriptorHandleForHeapStart());
 
         for (UINT n = 0; n < s_SwapChainBufferCount; n++)
@@ -214,6 +226,8 @@ void D3DTest::OnRender()
 {
     HRESULT result = {};
 
+    ImGui::ColorEdit4("Clear Color", m_ClearColor);
+
     PopulateCommandList();
 
     ID3D12CommandList* ppCommandLists[] = { m_CommandList.Get() };
@@ -250,8 +264,19 @@ void D3DTest::PopulateCommandList()
 
     CD3DX12_CPU_DESCRIPTOR_HANDLE rtvHandle(m_RtvHeap->GetCPUDescriptorHandleForHeapStart(), m_FrameIndex, m_RtvDescriptorSize);
 
-    const float clearColor[] = { 0.0f, 0.2f, 0.4f, 1.0f };
+
+    ID3D12DescriptorHeap* ppHeaps[] = { m_SrvHeap.Get() };
+    m_CommandList->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
+  
+
+    const float clearColor[] = { m_ClearColor[0], m_ClearColor[1], m_ClearColor[2], m_ClearColor[3] };
     m_CommandList->ClearRenderTargetView(rtvHandle, clearColor, 0, nullptr);
+    m_CommandList->OMSetRenderTargets(1, &rtvHandle, FALSE, NULL);
+    ImGui::Render();
+    ImGui_ImplDX12_RenderDrawData(ImGui::GetDrawData(), m_CommandList.Get());
+
+    
+
 
     m_CommandList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(m_RenderTargets[m_FrameIndex].Get(), D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PRESENT));
 
