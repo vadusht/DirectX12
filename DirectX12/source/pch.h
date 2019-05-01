@@ -1,3 +1,15 @@
 #pragma once
 
 #include <Windows.h>
+
+#include <d3d12.h>
+#include <dxgi1_4.h>
+#include "d3dx12.h"
+
+#include <string>
+#include <wrl.h>
+
+#include "Log.h"
+#include "Core.h"
+
+using Microsoft::WRL::ComPtr;

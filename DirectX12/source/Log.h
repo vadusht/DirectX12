@@ -4,6 +4,7 @@
 
 class Log
 {
+    Log() = delete;
 public:
     static void Init(const std::string& name);
     inline static std::shared_ptr<spdlog::logger>& GetLogger() { return s_Logger; }
