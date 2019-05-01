@@ -4,6 +4,7 @@
 #include "Win32Application.h"
 #include "D3DTest.h"
 
+#include "imgui.h"
 
 int WinMain(HINSTANCE instance, HINSTANCE prevInstance, LPSTR cmdLine, int showCmd)
 {
