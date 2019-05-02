@@ -51,6 +51,9 @@
     <ClCompile Include="external\imgui\examples\imgui_impl_win32.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="source\D3DTriangle.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="source\Log.h">
@@ -98,5 +101,12 @@
     <ClInclude Include="external\imgui\examples\imgui_impl_win32.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="source\D3DTriangle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="source\VS.hlsl" />
+    <FxCompile Include="source\PS.hlsl" />
   </ItemGroup>
 </Project>

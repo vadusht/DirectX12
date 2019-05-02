@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Win32Application.h"
 #include "D3DTest.h"
+#include "D3DTriangle.h"
 #include "imgui.h"
 #include "examples/imgui_impl_win32.h"
 #include "examples/imgui_impl_dx12.h"
@@ -47,7 +48,7 @@ int Win32Application::Run(D3DApplication* app, HINSTANCE instance, int showCmd, 
     
     ImGui::StyleColorsDark();
 
-    D3DTest* appTest = dynamic_cast<D3DTest*>(app);
+    D3DTriangle* appTest = dynamic_cast<D3DTriangle*>(app);
 
     ImGui_ImplWin32_Init(m_Hwnd);
     ImGui_ImplDX12_Init(appTest->m_Device.Get(), 3,
