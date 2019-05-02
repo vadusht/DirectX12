@@ -81,16 +81,8 @@ bool D3DTest::InitDirect3D()
         }
     }
 
-    D3D12_COMMAND_QUEUE_DESC queueDesc = {};
-    queueDesc.Flags = D3D12_COMMAND_QUEUE_FLAG_NONE;
-    queueDesc.Type = D3D12_COMMAND_LIST_TYPE_DIRECT;
 
-    result = m_Device->CreateCommandQueue(&queueDesc, IID_PPV_ARGS(&m_CommandQueue));
-    if (FAILED(result))
-    {
-        DX_ERROR("CreateCommandQueue");
-        return false;
-    }
+    CreateCommandObjects(m_Device.Get());
 
     DXGI_SWAP_CHAIN_DESC1 swapChainDesc = {};
     swapChainDesc.BufferCount = s_SwapChainBufferCount;
@@ -169,12 +161,6 @@ bool D3DTest::InitDirect3D()
         }
     }
 
-    result = m_Device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&m_CommandAllocator));
-    if (FAILED(result))
-    {
-        DX_ERROR("CreateCommandAllocator");
-        return false;
-    }
 
     return true;
 }
@@ -183,19 +169,7 @@ bool D3DTest::LoadAssets()
 {
     HRESULT result = {};
 
-    m_Device->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, m_CommandAllocator.Get(), nullptr, IID_PPV_ARGS(&m_CommandList));
-    if (FAILED(result))
-    {
-        DX_ERROR("CreateCommandList");
-        return false;
-    }
 
-    result = m_CommandList->Close();
-    if (FAILED(result))
-    {
-        DX_ERROR("Close");
-        return false;
-    }
 
     {
         result = m_Device->CreateFence(0, D3D12_FENCE_FLAG_NONE, IID_PPV_ARGS(&m_Fence));

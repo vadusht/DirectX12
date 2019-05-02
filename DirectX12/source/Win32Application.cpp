@@ -48,7 +48,7 @@ int Win32Application::Run(D3DApplication* app, HINSTANCE instance, int showCmd, 
     
     ImGui::StyleColorsDark();
 
-    D3DTriangle* appTest = dynamic_cast<D3DTriangle*>(app);
+    D3DTest* appTest = dynamic_cast<D3DTest*>(app);
 
     ImGui_ImplWin32_Init(m_Hwnd);
     ImGui_ImplDX12_Init(appTest->m_Device.Get(), 3,

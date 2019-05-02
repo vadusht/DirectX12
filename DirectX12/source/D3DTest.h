@@ -20,13 +20,12 @@ public:
     ComPtr<IDXGISwapChain3> m_SwapChain;
     ComPtr<ID3D12Device> m_Device;
     ComPtr<ID3D12Resource> m_RenderTargets[s_SwapChainBufferCount];
-    ComPtr<ID3D12CommandAllocator> m_CommandAllocator;
-    ComPtr<ID3D12CommandQueue> m_CommandQueue;
+    
     ComPtr<ID3D12RootSignature> m_RootSignature;
     ComPtr<ID3D12DescriptorHeap> m_RtvHeap;
     ComPtr<ID3D12DescriptorHeap> m_SrvHeap;
     ComPtr<ID3D12PipelineState> m_PipelineState;
-    ComPtr<ID3D12GraphicsCommandList> m_CommandList;
+    
     UINT m_RtvDescriptorSize;
 
     UINT m_FrameIndex;

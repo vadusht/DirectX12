@@ -1,5 +1,5 @@
 #pragma once
-
+#define SPDLOG_WCHAR_TO_UTF8_SUPPORT
 #include <Windows.h>
 
 #include <d3d12.h>

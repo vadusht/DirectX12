@@ -256,7 +256,6 @@ bool D3DTriangle::LoadAssets()
     }
 
 
-
     m_Device->CreateCommandList(0, D3D12_COMMAND_LIST_TYPE_DIRECT, m_CommandAllocator.Get(), m_PipelineState.Get(), IID_PPV_ARGS(&m_CommandList));
     if (FAILED(result))
     {

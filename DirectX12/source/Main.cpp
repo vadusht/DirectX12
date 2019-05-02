@@ -11,7 +11,7 @@ int WinMain(HINSTANCE instance, HINSTANCE prevInstance, LPSTR cmdLine, int showC
 {
     AllocConsole();
     Log::Init("DirectX 12");
-    D3DTriangle app(800, 600, L"Name");
+    D3DTest app(800, 600, L"Name");
     Win32Application::Run(&app, instance, showCmd, L"Test");
 }
     
